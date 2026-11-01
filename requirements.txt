@@ -1,0 +1,5 @@
+fastapi==0.111.0
+mangum==0.17.0
+aiohttp==3.9.5
+pycryptodome==3.20.0
+pydantic==2.7.1
