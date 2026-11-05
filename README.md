@@ -1,76 +1,25 @@
-# FF Guest Activator — Vercel API
+# GEST ACT API — Render + Railway
 
-## Deploy karo (3 steps)
+## Deploy on Render
+1. Extract this ZIP and push the folder contents to a GitHub repository.
+2. In Render, choose **New + → Blueprint** and select the repository.
+3. Render reads `render.yaml` and builds the included Dockerfile.
+4. After deployment, test `https://YOUR-SERVICE.onrender.com/health`.
 
-### Step 1 — Vercel CLI install karo
-```bash
-npm install -g vercel
-```
+## Deploy on Railway
+1. Extract this ZIP and push the folder contents to a GitHub repository.
+2. In Railway, choose **New Project → Deploy from GitHub Repo**.
+3. Select the repository. Railway builds using `Dockerfile`.
+4. Test `https://YOUR-SERVICE.up.railway.app/health`.
 
-### Step 2 — Login karo
-```bash
-vercel login
-```
+## API routes
+- `GET /` — API information
+- `GET /health` — health check
+- `POST /activate` — JSON body: `{"uid":"...","password":"..."}`
+- `GET /bind?uid=...&password=...&region=BD`
+- `GET /docs` — interactive API docs
 
-### Step 3 — Deploy karo (project folder ke andar se)
-```bash
-vercel --prod
-```
-Vercel ek live URL dega jaise:
-```
-https://ff-activator-xxxx.vercel.app
-```
-
----
-
-## Endpoints
-
-### GET /
-```
-https://YOUR-URL.vercel.app/
-```
-
-### GET /health
-```
-https://YOUR-URL.vercel.app/health
-```
-
-### POST /activate
-```bash
-curl -X POST https://YOUR-URL.vercel.app/activate \
-  -H "Content-Type: application/json" \
-  -d '{"uid": "UID_YAHAN", "password": "PASS_YAHAN"}'
-```
-
-**Success:**
-```json
-{
-  "success": true,
-  "account_uid": "123456789",
-  "region": "BD",
-  "chat_server": "1.2.3.4:5678",
-  "online_server": "1.2.3.4:9012",
-  "chat_response": "OK",
-  "online_response": "OK"
-}
-```
-
-**Fail:**
-```json
-{
-  "success": false,
-  "error": "OAuth failed — invalid UID or password"
-}
-```
-
----
-
-## File Structure
-```
-ff-vercel/
-├── api/
-│   └── index.py      ← FastAPI app (Vercel entry point)
-├── requirements.txt  ← Python dependencies
-├── vercel.json       ← Vercel routing config
-└── README.md
-```
+The service listens on the platform-provided `PORT`. Do not commit account passwords,
+API keys, or other secrets to the repository. A successful deploy only confirms that
+the web service started; it does not guarantee that an external game service will
+accept an activation request.
